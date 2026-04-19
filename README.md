@@ -1,73 +1,50 @@
 # Plant Disease Classification
 
-A robust, configurable deep learning pipeline for plant disease classification using PyTorch. 
+An AI system for plant disease classification from a leaf/plant image: accepts images of any host species and predicts the disease regardless of host.
 
-- **Web Interface:** [](https://huggingface.co/spaces/)
-- **REST API Documentation:** [s]()
-## Features
 
-- **Extensive Model Support**: Easily swap backbones by changing the config, enabled by integration with `timm`.
-- **Advanced Training Techniques**:
-  - Model EMA (Exponential Moving Average) to stabilize training and improve generalization.
-  - Layer-wise Learning Rate Decay (LLRD) for optimal fine-tuning of transformer and CNN architectures like `vit`, `convnextv2`.
-  - Mixed Precision Training for faster execution and lower memory footprint.
-  - Gradient Accumulation.
-- **Data Augmentation**: MixUp and CutMix integrations for regularization.
-- **Customizable Configuration**: Highly modular experiment setups using `omegaconf` (YAML config files).
-- **Experiment Tracking**: Full integration with Weights & Biases logging everything from hyperparameter configs to validation metrics.
+- **Live API:** [unionpoint/plant-disease-classification](https://huggingface.co/spaces/unionpoint/plant-disease-classification)
 
 ## Results
 
-| Model | mAP | Accuracy |
-| :--- | :---: | :---: |
-| EfficientNetV2 Small | 0.87 | 0.815 |
-| DINOv3 ViT Small Plus | 0.91 | 0.830 |
-| ConvNeXtV2 Tiny | 0.94 | 0.860 |
-
+| Model | mAP | Accuracy | Params (M) |  links |
+| ---- | ---- | ---- | ---- | ---- |
+| EfficientNetV2 Small | 0.87 | 0.81 | 21.5 |[ckpt](https://huggingface.co/unionpoint/tf_efficientnetv2_s.ft_plantdoc_384) |
+| DINOv3 ViT Small Plus | 0.91 | 0.83 | 28.7 |[ckpt](https://huggingface.co/unionpoint/vit_small_plus_patch16_dinov3.ft_plantdoc_384) |
+| ConvNeXtV2 Tiny | **0.94** | **0.86** | 28.6 |[ckpt](https://huggingface.co/unionpoint/convnextv2_tiny.ft_plantdoc_384) |
 ## Project Structure
 
 ```
 Plant-Disease-Classification/
-├── configs/
-│   └── config.yaml          # Main configuration file
+├── configs/       # train configuration files
 ├── data/
 │   ├── train/               # Train data (organized by class folders)
 │   └── val/                 # Val data (organized by class folders)
 ├── src/
 │   ├── dataset.py           # Dataloaders and augmentation logic
-│   ├── infer.py             # Inference script and prediction utilities
+│   ├── infer.py             # Inference script 
 │   ├── loss.py              # Loss functions (CrossEntropy, Focal Loss)
 │   ├── metrics.py           # Metric calculations
 │   ├── models.py            # Model definitions and param groupings
 │   ├── trainer.py           # Core training loop
-│   └── utils.py             # Helpers (schedulers, seeds, config loading)
+│   └── utils.py             # Helpers
 ├── train.py                 # Main entrypoint for training
 └── requirements.txt         # Project dependencies
 ```
 
 ## Quick Start
 
-### 1. Environment Setup
-
-It is highly recommended to use [`uv`](https://github.com/astral-sh/uv) for reliable package management.
+### 1. Setup
 
 ```bash
+git clone https://github.com/union-point/Plant-Disease-Classification.git
+
 uv pip install -r requirements.txt
 ```
 
-### 2. Prepare Data
+### 2. Provide Configuration
 
-```text
-data/
-└── train/
-    ├── Apple scab/
-    └── ...
-```
-
-### 3. Provide Configuration
-
-Modify the hyperparameters, model choices, and paths inside `configs/config.yaml`.
-
+Open `configs/config.yaml`, update the paths and specify the required hyperparameters, or load one of exiting configs.
 
 ### 4. Train the Model
 
@@ -102,26 +79,21 @@ python src/infer.py --image_path path/to/leaf.jpg --checkpoint checkpoints/best_
 
 > **Note**: The inference script expects a `data/label_map.json` file to map class indices to disease names.
 
+### API
+
+Run locally:
+
+```bash
+uv run -m api.main
+```
 ## Documentation
 
 ### Model Selection
 By default, the pipeline uses `timm.create_model(...)`. You can specify any model architecture available in `timm` (e.g. `convnextv2_base`, `efficientnet_b0`, `eva02_base_patch14_448`) directly in the `config.yaml` file under `model.backbone`.
 
-### Configuration Details
-The pipeline uses `OmegaConf`. Hyperparameters such as `loss`, `optimizer`, and `augmentation` can be tweaked. For example, to enable layer-wise learning rate decay, adjust `optimizer.layer_decay` to a value `< 1.0`.
-
 ### Logging & Checkpoints
 - Checkpoints are saved under the `checkpoints/` directory (customizable via `logging.checkpoint_dir`).
 - Best model checkpoints (current and EMA) are tracked based on the monitored validation metric.
 - When `logging.use_wandb` is true, the script initializes a Weights & Biases run, logging train/validation losses and selected metrics seamlessly.
-  
-### Technical Report
-A comprehensive report results is included in the repository.
-**[View Technical Report (PDF)]()**
-
-### Model Weights
----
-The trained weights are hosted on Hugging Face 
-- 🔗 **[Download from Hugging Face Space Files](https://huggingface.co/spaces/)**
 
 
