@@ -9,8 +9,15 @@ import torchvision.transforms.v2 as T
 from PIL import Image
 from sklearn.metrics import accuracy_score, average_precision_score
 
-from dataset import get_transforms
-
+def get_transforms(image_size):
+    return T.Compose(
+        [
+            T.Resize((image_size, image_size), antialias=True),
+            T.ToImage(),
+            T.ToDtype(torch.float32, scale=True),
+            T.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+        ]
+    )
 
 def get_tta_transforms(image_size):
     return [
