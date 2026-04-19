@@ -49,22 +49,13 @@ Plant-Disease-Classification/
 
 ### 1. Environment Setup
 
-It is highly recommended to use [`uv`](https://github.com/astral-sh/uv) for fast, reliable package management.
+It is highly recommended to use [`uv`](https://github.com/astral-sh/uv) for reliable package management.
 
 ```bash
-# Create a virtual environment using uv
-uv venv
-
-# Activate the environment
-source .venv/bin/activate  # Linux/MacOS
-
-# Install dependencies rapidly
 uv pip install -r requirements.txt
 ```
 
 ### 2. Prepare Data
-
-Ensure your dataset is arranged in PyTorch `ImageFolder` format. Place the training data in `data/train` and validation data in `data/val`. Each subplot or leaf should be in its corresponding disease or health category folder.
 
 ```text
 data/
@@ -123,15 +114,14 @@ The pipeline uses `OmegaConf`. Hyperparameters such as `loss`, `optimizer`, and 
 - Checkpoints are saved under the `checkpoints/` directory (customizable via `logging.checkpoint_dir`).
 - Best model checkpoints (current and EMA) are tracked based on the monitored validation metric.
 - When `logging.use_wandb` is true, the script initializes a Weights & Biases run, logging train/validation losses and selected metrics seamlessly.
+  
+### Technical Report
+A comprehensive report results is included in the repository.
+**[View Technical Report (PDF)]()**
 
-## Model Weights
+### Model Weights
 ---
-
 The trained weights are hosted on Hugging Face 
 - 🔗 **[Download from Hugging Face Space Files](https://huggingface.co/spaces/)**
 
 
-## Technical Report
-A comprehensive report results is included in the repository.
-
-**[View Technical Report (PDF)]()**
