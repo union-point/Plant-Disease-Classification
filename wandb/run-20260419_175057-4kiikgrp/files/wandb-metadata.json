@@ -1,0 +1,24 @@
+{
+  "os": "Linux-6.19.11-200.fc43.x86_64-x86_64-with-glibc2.42",
+  "python": "CPython 3.13.2",
+  "startedAt": "2026-04-19T13:50:57.074183Z",
+  "program": "/home/union_point/ml/Plant-Disease-Classification/train.py",
+  "codePath": "train.py",
+  "codePathLocal": "train.py",
+  "email": "coretwoduo75@gmail.com",
+  "root": "/home/union_point/ml/Plant-Disease-Classification",
+  "host": "laptop",
+  "executable": "/home/union_point/miniconda3/bin/python",
+  "cpu_count": 2,
+  "cpu_count_logical": 4,
+  "disk": {
+    "/": {
+      "total": "254356226048",
+      "used": "139972616192"
+    }
+  },
+  "memory": {
+    "total": "7760048128"
+  },
+  "writerId": "5r5nghwc1gn8jkabzqczvjhk7aa94c6x"
+}
