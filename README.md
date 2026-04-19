@@ -1,7 +1,6 @@
 # Plant Disease Classification
 
-A robust, configurable deep learning pipeline for plant disease classification using PyTorch. This project leverages `timm` for a vast array of pre-trained backbones (e.g., EfficientNetV2, ConvNeXtV2, EVA02) and offers advanced training features such as Exponential Moving Average (EMA) for weights, Layer-wise Learning Rate Decay (LLRD), MixUp/CutMix data augmentation, and Weights & Biases (W&B) integration for experiment tracking.
-
+A robust, configurable deep learning pipeline for plant disease classification using PyTorch. 
 
 - **Web Interface:** [](https://huggingface.co/spaces/)
 - **REST API Documentation:** [s]()
